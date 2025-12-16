@@ -1,0 +1,86 @@
+# Vacuum Cleaner Agent - Google Colab Compatible
+
+# Input
+location_A = input("Enter status of Location A (Clean/Dirty): ")
+location_B = input("Enter status of Location B (Clean/Dirty): ")
+
+vacuum_location = "A"
+
+total_locations = 2
+cleaned_locations = 0
+
+print("\n-----------------------------------------------")
+print("Percept\t\t\tAction\t\t\tStatus")
+print("-----------------------------------------------")
+
+# Location A
+if vacuum_location == "A":
+    percept = f"At A, {location_A}"
+    if location_A == "Dirty":
+        action = "Clean Location A"
+        location_A = "Clean"
+        cleaned_locations += 1
+    else:
+        action = "No Action"
+    status = f"A:{location_A} B:{location_B}"
+    print(percept, "\t", action, "\t", status)
+
+    vacuum_location = "B"
+
+# Location B
+if vacuum_location == "B":
+    percept = f"At B, {location_B}"
+    if location_B == "Dirty":
+        action = "Clean Location B"
+        location_B = "Clean"
+        cleaned_locations += 1
+    else:
+        action = "No Action"
+    status = f"A:{location_A} B:{location_B}"
+    print(percept, "\t", action, "\t", status)
+
+print("-----------------------------------------------")
+
+# -------- STATUS --------
+print("\nStatus:")
+print("Location A Status:", location_A)
+print("Location B Status:", location_B)
+
+# -------- OVERALL PERFORMANCE --------
+performance_percentage = (cleaned_locations / total_locations) * 100
+
+print("\nPerformance:")
+print("Total Locations:", total_locations)
+print("Cleaned Locations:", cleaned_locations)
+print("Performance Percentage:", performance_percentage, "%")
+
+# -------- BACKEND CALCULATED LOCATION PERFORMANCE --------
+print("\nVacuum Cleaner Performance\n")
+
+def calculate_performance(status):
+    total = 1
+    cleaned = 1 if status == "Clean" else 0
+    not_cleaned = total - cleaned
+    pending = 0
+
+    cleaned_pct = (cleaned / total) * 100
+    not_cleaned_pct = (not_cleaned / total) * 100
+    pending_pct = (pending / total) * 100
+
+    return cleaned_pct, not_cleaned_pct, pending_pct
+
+# Location A Performance
+cleaned_pct, not_cleaned_pct, pending_pct = calculate_performance(location_A)
+print("Location A")
+print("Cleaned      :", cleaned_pct, "%")
+print("Not_cleaned  :", not_cleaned_pct, "%")
+print("Pending      :", pending_pct, "%")
+print("----------------------------")
+
+# Location B Performance
+cleaned_pct, not_cleaned_pct, pending_pct = calculate_performance(location_B)
+print("Location B")
+print("Cleaned      :", cleaned_pct, "%")
+print("Not_cleaned  :", not_cleaned_pct, "%")
+print("Pending      :", pending_pct, "%")
+print("----------------------------")
